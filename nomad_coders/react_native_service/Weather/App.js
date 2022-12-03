@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   },
   cityName: {
     fontSize: 68,
-    fontWeight: 500,
+    fontWeight: "500",
     color: "#80cbc4"
   },
   weather: {
