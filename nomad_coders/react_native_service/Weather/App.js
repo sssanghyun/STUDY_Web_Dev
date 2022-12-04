@@ -7,7 +7,7 @@ import { Fontisto } from '@expo/vector-icons';
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
-const API_KEY = "4c576654fda15a0e3959382544c462ba";
+const API_KEY = "";
 
 const icons = {
   Clouds: "cloudy",
