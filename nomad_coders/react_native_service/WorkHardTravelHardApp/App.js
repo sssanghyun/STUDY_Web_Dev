@@ -20,9 +20,11 @@ export default function App() {
     if (text === "") {
       return
     }
-    //save to do
+    const newToDos = Object.assign({}, toDos, { [Date.now()]: { text, wokr: working }, });
+    setToDos(newToDos);
     setText("");
   };
+  console.log(toDos);
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
