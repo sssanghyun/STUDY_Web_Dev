@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   StyleSheet,
   Text, TouchableOpacity, View, TouchableHighlight,
@@ -44,6 +44,7 @@ export default function App() {
         returnKeyType='done'
         style={styles.input}
         placeholder={working ? "Add a To Do" : "Where do you want to go?"}
+        value={text}
       />
       <ScrollView>
         {Object.keys(toDos).map((key) => (
