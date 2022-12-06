@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   StyleSheet,
   Text, TouchableOpacity, View, TouchableHighlight,
@@ -9,24 +9,43 @@ import {
   ScrollView,
 } from 'react-native';
 import { theme } from './colors';
+import AsnyncStorage from '@react-native-async-storage/async-storage';
+
+const STORAGE_KEY = "@toDos";
 
 export default function App() {
   const [working, setWorking] = useState(true);
   const [text, setText] = useState("");
   const [toDos, setToDos] = useState({});
+
+  useEffect(() => {
+    loadToDos();
+  }, []);
   const travel = () => setWorking(false);
   const work = () => setWorking(true);
   const onChangeText = (payload) => setText(payload);
-  const addToDo = () => {
+  const saveToDo = async (toSave) => {
+    try {
+      await AsnyncStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+    } catch (e) {
+      console.log(e);
+      //saving error
+    }
+  };
+  const loadToDos = async () => {
+    const s = await AsnyncStorage.getItem(STORAGE_KEY);
+    setToDos(JSON.parse(s));
+  }
+  const addToDo = async () => {
     if (text === "") {
       return
     }
     // ES6
-    const newToDos = { ...toDos, [Date.now()]: { text, work: working, } };
+    const newToDos = { ...toDos, [Date.now()]: { text, working: working, } };
     setToDos(newToDos);
+    await saveToDo(newToDos);
     setText("");
   };
-  console.log(toDos);
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -47,10 +66,12 @@ export default function App() {
         value={text}
       />
       <ScrollView>
-        {Object.keys(toDos).map((key) => (
-          <View style={styles.toDo} key={key}>
-            <Text style={styles.toDoText}>{toDos[key].text}</Text>
-          </View>))}
+        {Object.keys(toDos).map((key) =>
+          toDos[key].working === working ? (
+            <View style={styles.toDo} key={key}>
+              <Text style={styles.toDoText}>{toDos[key].text}</Text>
+            </View>) : null
+        )}
       </ScrollView>
 
     </View>
