@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
-import { Fontisto } from '@expo/vector-icons';
+import { Fontisto, AntDesign } from '@expo/vector-icons';
 import {
   StyleSheet,
   Text, TouchableOpacity, View, TouchableHighlight,
@@ -18,14 +18,22 @@ const STORAGE_KEY = "@toDos";
 export default function App() {
   const [working, setWorking] = useState(true);
   const [text, setText] = useState("");
+  const [editText, setEditText] = useState("");
   const [toDos, setToDos] = useState({});
 
   useEffect(() => {
     loadToDos();
   }, []);
-  const travel = () => setWorking(false);
-  const work = () => setWorking(true);
+  const travel = async () => {
+    setWorking(false);
+    await AsnyncStorage.setItem("@work", "false");
+  }
+  const work = async () => {
+    setWorking(true);
+    await AsnyncStorage.setItem("@work", "true");
+  }
   const onChangeText = (payload) => setText(payload);
+  const onChangeEditText = (payload) => setEditText(payload);
   const saveToDo = async (toSave) => {
     try {
       await AsnyncStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
@@ -35,6 +43,7 @@ export default function App() {
     }
   };
   const loadToDos = async () => {
+    setWorking(JSON.parse(await AsnyncStorage.getItem("@work")));
     const s = await AsnyncStorage.getItem(STORAGE_KEY);
     setToDos(JSON.parse(s));
   }
@@ -43,7 +52,7 @@ export default function App() {
       return
     }
     // ES6
-    const newToDos = { ...toDos, [Date.now()]: { text, working: working, } };
+    const newToDos = { ...toDos, [Date.now()]: { text, working: working, finish: false, edit: false } };
     setToDos(newToDos);
     await saveToDo(newToDos);
     setText("");
@@ -62,7 +71,19 @@ export default function App() {
         }
       }
     ]);
-    return
+  }
+  const editToDo = async (key) => {
+    const newToDos = { ...toDos };
+    newToDos[key].edit = !newToDos[key].edit;
+    setToDos(newToDos);
+    await saveToDo(newToDos);
+    setEditText(newToDos[key].text);
+  }
+  const finishToDo = async (key) => {
+    const newToDos = { ...toDos };
+    newToDos[key].finish = !newToDos[key].finish;
+    setToDos(newToDos);
+    await saveToDo(newToDos);
   }
   return (
     <View style={styles.container}>
@@ -87,10 +108,28 @@ export default function App() {
         {Object.keys(toDos).map((key) =>
           toDos[key].working === working ? (
             <View style={styles.toDo} key={key}>
-              <Text style={styles.toDoText}>{toDos[key].text}</Text>
-              <TouchableOpacity onPress={() => deleteToDo(key)}>
-                <Fontisto name="trash" size={18} color="white" />
-              </TouchableOpacity>
+              {toDos[key].edit ?
+                <TextInput
+                  onSubmitEditing={toDos[key].edit = false}
+                  onChangeText={onChangeEditText}
+                  returnKeyType='done'
+                  style={styles.input}
+                  value={editText}
+                /> :
+                <Text style={toDos[key].finish ? styles.toDoTextFinish : styles.toDoText}>{toDos[key].text}</Text>
+              }
+
+              <View style={styles.iconView}>
+                <TouchableOpacity style={styles.icon} onPress={() => finishToDo(key)}>
+                  <AntDesign name="checkcircleo" size={20} color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.icon} onPress={() => editToDo(key)}>
+                  <AntDesign name="edit" size={20} color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.icon} onPress={() => deleteToDo(key)}>
+                  <AntDesign name="delete" size={20} color="white" />
+                </TouchableOpacity>
+              </View>
             </View>) : null
         )}
       </ScrollView>
@@ -126,7 +165,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.toDoBg,
     marginBottom: 10,
     paddingVertical: 20,
-    paddingHorizontal: 40,
+    paddingLeft: 40,
+    paddingRight: 10,
     borderRadius: 15,
     flexDirection: "row",
     alignItems: "center",
@@ -137,5 +177,19 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "500",
+  },
+  toDoTextFinish: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "500",
+    textDecorationLine: 'line-through'
+  },
+  iconView: {
+    flexDirection: "row",
+    alignItems: "center",
+
+  },
+  icon: {
+    paddingHorizontal: 5
   }
 });
