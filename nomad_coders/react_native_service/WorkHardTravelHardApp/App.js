@@ -79,6 +79,13 @@ export default function App() {
     await saveToDo(newToDos);
     setEditText(newToDos[key].text);
   }
+  const editToDoDone = async (key) => {
+    const newToDos = { ...toDos };
+    newToDos[key].edit = false;
+    newToDos[key].text = editText;
+    setToDos(newToDos);
+    await saveToDo(newToDos);
+  }
   const finishToDo = async (key) => {
     const newToDos = { ...toDos };
     newToDos[key].finish = !newToDos[key].finish;
@@ -110,7 +117,7 @@ export default function App() {
             <View style={styles.toDo} key={key}>
               {toDos[key].edit ?
                 <TextInput
-                  onSubmitEditing={toDos[key].edit = false}
+                  onSubmitEditing={() => editToDoDone(key)}
                   onChangeText={onChangeEditText}
                   returnKeyType='done'
                   style={styles.input}
