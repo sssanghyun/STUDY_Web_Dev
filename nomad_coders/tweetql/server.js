@@ -4,10 +4,12 @@ let tweets = [
   {
     id: "1",
     text: "first",
+    userId: "2"
   },
   {
     id: "2",
-    text: "second"
+    text: "second",
+    userId: "1"
   }
 ]
 
@@ -62,11 +64,6 @@ const resolvers = {
       return users;
     }
   },
-  User: {
-    fullName({ firstName, lastName }) {
-      return `${firstName} ${lastName}`;
-    }
-  },
   Mutation: {
     postTweet(_, { text, userId }) {
       const newTweet = {
@@ -82,6 +79,16 @@ const resolvers = {
       tweets = tweets.filter(tweet => tweet.id !== id);
       return true;
     },
+  },
+  User: {
+    fullName({ firstName, lastName }) {
+      return `${firstName} ${lastName}`;
+    }
+  },
+  Tweet: {
+    author({ userId }) {
+      return users.find(user => user.id === userId);
+    }
   }
 };
 
