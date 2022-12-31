@@ -6,3 +6,5 @@
 # 02 React Native로 app 만들기
 - https://nomadcoders.co/react-native-for-beginners
 
+# 03 GraphQL로 영화 API 만들기
+- https://nomadcoders.co/graphql-for-beginners
