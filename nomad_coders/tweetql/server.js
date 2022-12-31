@@ -33,6 +33,9 @@ const typeDefs = gql`
     lastName: String!
     fullName: String!
   }
+  """
+  Tweet object represents a resource for a Tweet
+  """
   type Tweet {
     id: ID!
     text: String!
