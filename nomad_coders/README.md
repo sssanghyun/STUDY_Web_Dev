@@ -8,3 +8,6 @@
 
 # 03 GraphQL로 영화 API 만들기
 - https://nomadcoders.co/graphql-for-beginners
+
+# 04 Typescript로 블록체인 만들기
+- https://nomadcoders.co/typescript-for-beginners
