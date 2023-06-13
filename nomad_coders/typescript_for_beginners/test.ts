@@ -1,6 +1,6 @@
-const nico = {
-    nickname: "nick"
-}
+// const nico = {
+//     nickname: "nick"
+// }
 
 // hello()라는 함수가 없기때문에 에러
 // nico.hello()
@@ -32,18 +32,18 @@ c.push(1) // 가능
 
 // type을 선언할때 첫문자는 대문자
 // ?는 선택적 타입
-type Player = {
-	name: string,
-	age?: number
-}
-const playerSang : Player = {
-	name:"nico"
-}
-const playerHyun : Player = {
-	name:"hyun"
-}
+// type Player = {
+// 	name: string,
+// 	age?: number
+// }
+// const playerSang : Player = {
+// 	name:"nico"
+// }
+// const playerHyun : Player = {
+// 	name:"hyun"
+// }
 
-type Age = number;
+// type Age = number;
 
 // function playerMaker(name:string) : Player {
 // 	return {
@@ -51,4 +51,50 @@ type Age = number;
 // 	}
 // }
 
+// const playerMaker = (name:string) : Player => ({name})
+
+type Player = {
+	readonly name: string,
+	// name은 읽기전용
+	age?: number
+}
+
 const playerMaker = (name:string) : Player => ({name})
+const nico = playerMaker("nico")
+nico.age = 12 // OK
+// nico.name = "asd" // 읽기전용이라 안됨
+
+// let a = [] // a는 any타입 아무타입이나 될 수 있음.
+// const b : any = []
+// any를 사용하면 타입스크립트의 보호를 받지 못함(비활성화)
+
+// 타입을 모를 때
+// let a:unknown;
+// type을 체크하고 사용해야함
+
+// let b = a + 1 // 안됨 a의 타입이 정해지지 않음.
+
+if(typeof a === 'number'){
+	let b = a + 1
+	// 가능 a의 타입이 number로 확정됨
+}
+
+// function hello():void{
+// function hello(){
+// 	console.log("x")
+// }
+// return이 없어서 void
+
+function hello(name:string|number){
+	if(typeof name === "string"){
+		//name은 string
+	}else if(typeof name === 'number'){
+		//name은 number
+	}else {
+		//name은 never
+	}
+}
+
+type Add = (a:number, b:number) => number;
+
+const add:Add = (a, b) => a + b
