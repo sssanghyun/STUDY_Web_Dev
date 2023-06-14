@@ -98,3 +98,16 @@ function hello(name:string|number){
 type Add = (a:number, b:number) => number;
 
 const add:Add = (a, b) => a + b
+
+type SuperPrint = {
+	<TypePlaceholder>(arr: TypePlaceholder[]):TypePlaceholder
+}
+
+// const superPrint: SuperPrint = (arr) => {
+// 	arr.forEach(i => console.log(i))
+// }
+
+// const a = superPrint([1, 2, 3, 4]) //OK
+// const b = superPrint([true, ture, false]) //OK
+// const c = superPrint([1, 2, true]) // OK
+// const d = superPrint([1, 2, true]) // OK
