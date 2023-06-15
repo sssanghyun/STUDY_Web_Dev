@@ -111,3 +111,49 @@ type SuperPrint = {
 // const b = superPrint([true, ture, false]) //OK
 // const c = superPrint([1, 2, true]) // OK
 // const d = superPrint([1, 2, true]) // OK
+
+function superPrint<T>(a: T[]){
+	return a[0]
+}
+const aa = superPrint([1, 2, 3, 4]) //OK
+
+type A = Array<number>
+
+let aaa:A = [1, 2, 3, 4] //OK
+
+// 클래스
+class Player1{
+	constructor(
+		private firestName: string,
+		private lastName: string,
+		public nickname: string
+	) {}
+}
+
+const bbb = new Player1("nico", "las", "good")
+//bbb.firstName // private
+bbb.nickname // OK
+
+// 추상 클래스
+abstract class User {
+    constructor(
+            private firestName: string,
+            private lastName: string,
+            protected nickname: string
+        ) {}
+        // 추상 메소드
+        abstract getNickName():void
+        getFullName(){
+            return `${this.firestName} ${this.lastName}`
+        }
+    }
+    
+    class Player2 extends User {
+        // 추상메소드 구현
+        getNickName(){
+            console.log(this.nickname)
+        }
+    }
+    const ccc = new Player2("nico", "las", "good")
+    
+    ccc.getFullName()
