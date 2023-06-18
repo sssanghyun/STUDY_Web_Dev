@@ -148,12 +148,49 @@ abstract class User {
         }
     }
     
-    class Player2 extends User {
-        // 추상메소드 구현
-        getNickName(){
-            console.log(this.nickname)
-        }
+class Player2 extends User {
+    // 추상메소드 구현
+    getNickName(){
+        console.log(this.nickname)
     }
-    const ccc = new Player2("nico", "las", "good")
-    
-    ccc.getFullName()
+}
+const ccc = new Player2("nico", "las", "good")
+
+ccc.getFullName()
+
+
+type Words = {
+    [key:string]: string
+}
+
+// let dict :Words = {
+//     "potato": "food"
+// }
+
+class Dict {
+	private words: Words
+	constructor(){
+		this.words = {}
+	}
+	add(word:Word){
+		if(this.words[word.term] === undefined){
+			this.words[word.temr] = word.def;
+        }
+	}
+	def(term:string){
+		return this.words[term]
+    }
+}
+
+class Word {
+	constructor(
+		public term: string,
+		public def: string
+	) {}
+} 
+
+const kimchi = new Word("kimchi", "한국의 음식")
+
+const dict = new Dict()
+dict.add(kimchi)
+dict.def("kimchi")
