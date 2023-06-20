@@ -194,3 +194,56 @@ const kimchi = new Word("kimchi", "한국의 음식")
 const dict = new Dict()
 dict.add(kimchi)
 dict.def("kimchi")
+
+// 타입이 특정한 값을 갖도록 할 수 있음
+type Team3 = "red" | "blue" | "green"
+type Player3 = {
+	nickname:string,
+	team: Team
+}
+
+const test :Player3 = {
+	nickname: "asd",
+	team: "blue" // O
+	// team : "yellow" X
+}
+
+type Team4 = "red" | "blue" | "green"
+type Player4 = {
+	nickname:string,
+	team: Team4
+}
+
+// interface
+interface Player5 {
+	nickname: string,
+	team: Team4
+}
+
+interface User {
+	name: string
+}
+
+// User 상속
+interface Superuser extends User{
+}
+
+type User1 = {
+	name: string
+}
+// 상속
+// type Player = User & {
+// }
+
+interface User2 {
+	name: string
+}
+interface User2 {
+	health: number
+}
+
+const user2: User2 ={
+	name:"asd",
+	health: 10
+}
+//가능 같은 인터페이스를 합쳐줌(타입으로 구현하면 중복 안됨)
