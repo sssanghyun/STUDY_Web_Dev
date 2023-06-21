@@ -247,3 +247,42 @@ const user2: User2 ={
 	health: 10
 }
 //가능 같은 인터페이스를 합쳐줌(타입으로 구현하면 중복 안됨)
+
+
+// js는 abstract 가 없음.
+abstract class User6 {
+	constructor(
+		protected firstName: string,
+		protected lastName: string
+	) {}
+	abstract sayHi(name:string):string
+	abstract fullName():string
+}
+class Player6 extends User6 {
+	fullName(){
+		return `${this.firstName} ${this.lastName}`
+	}
+	sayHi(name:string){
+		return `Hello ${name}. My name is ${this.fullName()}`
+	}
+}
+
+interface User7 {
+		firstName: string,
+		lastName: string,
+		sayHi(name:string):string
+		fullName():string
+}
+class Player7 implements User7 {
+	constructor(
+		// private, protected가 될 수 없음
+		public firstName:string,
+		public lastName:string
+	) {}
+	fullName(){
+		return `${this.firstName} ${this.lastName}`
+	}
+	sayHi(name:string){
+		return `Hello ${name}. My name is ${this.fullName()}`
+	}
+}
