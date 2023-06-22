@@ -286,3 +286,55 @@ class Player7 implements User7 {
 		return `Hello ${name}. My name is ${this.fullName()}`
 	}
 }
+
+type Player10 = {
+	name:string
+}
+// type 상속
+type Player10A = Player10 & {
+	lastname:string
+}
+const player10: Player10A = {
+	name:"nico",
+	lastname:"park"
+}
+
+interface Player11 {
+	name: string
+}
+// 인터페이스 상속
+interface Player11A extends Player11 {
+	lastName: "park"
+}
+// 인터페이스는 중복 가능
+interface Player11A {
+	health:number
+}
+
+const player11: Player11A ={
+	name: "nico",
+	lastName: "park",
+	health:5
+}
+
+// 추상클래스
+type PlayerC = {
+	firstName:string
+}
+interface PlayerD {
+	firstName:string
+}
+// 타입 상속
+class UserE implements PlayerC {
+	constructor(
+		public firstName:string
+	){}
+}
+// 인터페이스 상속
+// class UserE implements PlayerD {
+//	constructor(
+//		public firstName:string
+//	){}
+//}
+// - 클래스나 오브젝트 모양을 정의하고 싶다면 인터페이스 사용
+// - 다른 모든 경우 타입을 씀
