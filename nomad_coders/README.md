@@ -11,3 +11,6 @@
 
 # 04 Typescript로 블록체인 만들기
 - https://nomadcoders.co/typescript-for-beginners
+
+# 05 NextJS 시작하기
+- https://nomadcoders.co/nextjs-fundamentals
