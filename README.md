@@ -8,3 +8,7 @@ STUDY_Web_Dev/nomad_coders/
 # Opentutorials
 STUDY_Web_Dev/opentutorials/
 - 생활코딩 강의를 보고 실습
+
+# uknowcoding
+STUDY_Web_Dev/uknowcoding/
+- 유노코딩이라는 유튜브 반응형 웹 강의를 보고 실습
